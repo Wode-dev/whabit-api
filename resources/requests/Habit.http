@@ -1,3 +1,6 @@
-@baseurl = "api.whabit.wode.dev"
+@baseurl = http://api.whabit.wode.lh
 
-{{baseurl}}/api/
+GET {{baseurl}}/habit HTTP/1.1
+
+###
+GET {{baseurl}}/accomplishment HTTP/1.1

@@ -1,5 +1,6 @@
 <?php
 
+use App\Habit;
 use Illuminate\Database\Seeder;
 
 class HabitSeeder extends Seeder
@@ -11,6 +12,6 @@ class HabitSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Habit::class, 50)->create();
     }
 }
