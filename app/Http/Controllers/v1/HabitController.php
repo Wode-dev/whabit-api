@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Habit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Habit as HabitResource;
 
 class HabitController extends Controller
 {
@@ -37,7 +38,7 @@ class HabitController extends Controller
      */
     public function show(Habit $habit)
     {
-        return $habit->toArray();
+        return new HabitResource($habit->load("accomplishments:id,habit_id,date"));
     }
 
     /**
