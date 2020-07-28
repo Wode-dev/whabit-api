@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('habit', 'v1\habit');
+Route::apiResource('habit', 'v1\HabitController');
+Route::apiResource('accomplishment', 'v1\AccomplishmentController');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

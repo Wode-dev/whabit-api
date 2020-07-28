@@ -1,0 +1,3 @@
+@baseurl = "api.whabit.wode.dev"
+
+{{baseurl}}/api/
