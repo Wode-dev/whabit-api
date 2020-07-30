@@ -14,6 +14,12 @@ class Habit extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'data' => [
+                'accomplishment_amount' => $this->accomplishments->count()
+            ]
+        ];
     }
 }
