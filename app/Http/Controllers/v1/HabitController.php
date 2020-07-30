@@ -16,7 +16,7 @@ class HabitController extends Controller
      */
     public function index()
     {
-        return Habit::all()->toArray();
+        return HabitResource::collection(Habit::all());
     }
 
     /**
