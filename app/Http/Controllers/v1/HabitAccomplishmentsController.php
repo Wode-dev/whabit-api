@@ -60,11 +60,11 @@ class HabitAccomplishmentsController extends Controller
     /**
      * Destroy accomplishment without the need for
      */
-    public function destroyByDate(Habit $habit, Request $request)
+    public function destroyByDate( Request $request, Habit $habit)
     {
         $date = $request->year . "-". $request->month . "-" . $request->day;
         $accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->first();
-        if($accomplishment == null){
+        if($accomplishment != null){
             if($accomplishment->delete()){
                 return response('', 204);
             } else {
