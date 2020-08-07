@@ -40,9 +40,39 @@ class HabitAccomplishmentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Habit $habit, Request $request)
     {
-        //
+        $date = $request->year . "-". $request->month . "-" . $request->day;
+        if($accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->get()->count() > 0){
+            return response('', 409);
+        }
+        $accomplishment = $habit->accomplishments()->create([
+            "date"=> $date
+        ]);
+        if($accomplishment){
+            return response()->json(json_encode($accomplishment->toArray()), 201);
+        } else {
+            return response('', 400);
+        }
+
+    }
+
+    /**
+     * Destroy accomplishment without the need for
+     */
+    public function destroyByDate(Habit $habit, Request $request)
+    {
+        $date = $request->year . "-". $request->month . "-" . $request->day;
+        $accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->first();
+        if($accomplishment == null){
+            if($accomplishment->delete()){
+                return response('', 204);
+            } else {
+                return response('', 400);
+            }
+        } else {
+            return response('', 404);
+        }
     }
 
     /**
