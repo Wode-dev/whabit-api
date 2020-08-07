@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Response;
 
 class Cors
 {
@@ -15,9 +16,17 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, X-Token-Auth, Authorization');
+        // $allowedOrigins = '*';
+        $allowedOrigins = 'http://localhost:8080';
+        header('Access-Control-Allow-Origin: '. $allowedOrigins);
+        $headers = [
+            'Access-Control-Allow-Methods'=> 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers'=> 'Content-Type, X-Auth-Token, Origin',
+            'Access-Control-Allow-Credentials' => true
+        ];
+        if($request->getMethod() == 'OPTIONS'){
+            return response('', 200)->withHeaders($headers);
+        }
+        return $next($request);
     }
 }
