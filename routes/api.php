@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['cors'])->group(function(){
     Route::delete('habit/{habit}/accomplishments/date','v1\HabitAccomplishmentsController@destroyByDate');
     Route::apiResource('habit', 'v1\HabitController');
-    Route::apiResource('accomplishment', 'v1\AccomplishmentController');
-    Route::apiResource('habit.accomplishments','v1\HabitAccomplishmentsController');
+    // Route::apiResource('accomplishment', 'v1\AccomplishmentController');
+    Route::apiResource('habit.accomplishments','v1\HabitAccomplishmentsController')->except([
+        'show',
+        'update'
+    ]);
 });
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

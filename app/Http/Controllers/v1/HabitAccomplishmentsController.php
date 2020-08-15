@@ -10,10 +10,10 @@ use App\Http\Controllers\Controller;
 class HabitAccomplishmentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Retrieves all accomplishments from a habit
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index(Habit $habit, Request $request)
     {
         $query = $habit->accomplishments;
@@ -35,11 +35,11 @@ class HabitAccomplishmentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Saves an accomplishment
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Habit $habit, Request $request)
     {
         $date = $request->year . "-". $request->month . "-" . $request->day;
@@ -48,7 +48,9 @@ class HabitAccomplishmentsController extends Controller
         }
         $accomplishment = $habit->accomplishments()->create([
             "date"=> $date
-        ]);
+            ]
+        );
+
         if($accomplishment){
             return response()->json(json_encode($accomplishment->toArray()), 201);
         } else {
@@ -58,8 +60,8 @@ class HabitAccomplishmentsController extends Controller
     }
 
     /**
-     * Destroy accomplishment without the need for
-     */
+    * Destroy accomplishment without the need for getting the id
+    */
     public function destroyByDate( Request $request, Habit $habit)
     {
         $date = $request->year . "-". $request->month . "-" . $request->day;
@@ -76,36 +78,17 @@ class HabitAccomplishmentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Accomplishment  $accomplishment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Accomplishment $accomplishment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Accomplishment  $accomplishment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Accomplishment $accomplishment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Accomplishment  $accomplishment
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Accomplishment  $accomplishment
+    * @return \Illuminate\Http\Response
+    */
     public function destroy(Accomplishment $accomplishment)
     {
-        //
+        if($accomplishment->delete()){
+            return response('', 204);
+        } else {
+            return response('', 400);
+        }
     }
 }
