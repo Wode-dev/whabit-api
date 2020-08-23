@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Register passport routes
+        Passport::routes();
+
+        // Enables ImplicitGrant because of the vue.js client
+        Passport::enableImplicitGrant();
     }
 }
