@@ -15,8 +15,8 @@ class AuthController extends Controller
             '/oauth/token',
             [
                 'grant_type' => 'password',
-                'client_id' => $request->clientId,
-                'client_secret' => $request->clientSecret,
+                'client_id' => $request->id,
+                'client_secret' => $request->secret,
                 'username' => $request->email,
                 'password' => $request->password,
                 'scope' => '',
