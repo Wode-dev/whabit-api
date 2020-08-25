@@ -13,11 +13,17 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware(['cors'])->group(function(){
-    Route::delete('habit/{habit}/accomplishments/date','v1\HabitAccomplishmentsController@destroyByDate');
+
+Route::middleware(['cors'])->group(function () {
+
+    Route::group(['prefix' => 'login'], function () {
+        Route::put('', 'auth\AuthController@passwordGrant');
+    });
+
+    Route::delete('habit/{habit}/accomplishments/date', 'v1\HabitAccomplishmentsController@destroyByDate');
     Route::apiResource('habit', 'v1\HabitController');
     // Route::apiResource('accomplishment', 'v1\AccomplishmentController');
-    Route::apiResource('habit.accomplishments','v1\HabitAccomplishmentsController')->except([
+    Route::apiResource('habit.accomplishments', 'v1\HabitAccomplishmentsController')->except([
         'show',
         'update'
     ]);
