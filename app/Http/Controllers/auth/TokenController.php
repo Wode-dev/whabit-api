@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AuthController extends Controller
+class TokenController extends Controller
 {
     public function passwordGrant(Request $request)
     {

@@ -16,8 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['cors'])->group(function () {
 
-    Route::group(['prefix' => 'login'], function () {
-        Route::put('', 'auth\AuthController@passwordGrant');
+    // Routes for login through API
+    Route::group(['prefix' => 'session'], function () {
+        Route::put('login', 'auth\TokenController@passwordGrant');
+    });
+
+    // Routes for managing user accounts
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('signup', 'auth\UserController@register');
+        Route::delete('delete', 'auth\UserController@destroy');
+        Route::put('update', 'auth\UserController@update');
     });
 
     Route::delete('habit/{habit}/accomplishments/date', 'v1\HabitAccomplishmentsController@destroyByDate');
