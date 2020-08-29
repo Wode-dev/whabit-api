@@ -9,18 +9,24 @@ use App\Http\Controllers\Controller;
 
 class HabitAccomplishmentsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Accomplishment::class, 'accomplishment');
+    }
+
     /**
-    * Retrieves all accomplishments from a habit
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Retrieves all accomplishments from a habit
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Habit $habit, Request $request)
     {
         $query = $habit->accomplishments;
 
         try {
             //code...
-            if($request->year){
+            if ($request->year) {
                 $query = $query->toQuery()->whereYear('date', $request->year)->get();
             }
             if ($request->month) {
@@ -35,39 +41,40 @@ class HabitAccomplishmentsController extends Controller
     }
 
     /**
-    * Saves an accomplishment
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Saves an accomplishment
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Habit $habit, Request $request)
     {
-        $date = $request->year . "-". $request->month . "-" . $request->day;
-        if($accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->get()->count() > 0){
+        $date = $request->year . "-" . $request->month . "-" . $request->day;
+        if ($accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->get()->count() > 0) {
             return response('', 409);
         }
         $accomplishment = $habit->accomplishments()->create([
-            "date"=> $date
-            ]
-        );
+            "date" => $date
+        ]);
 
-        if($accomplishment){
+        if ($accomplishment) {
             return response()->json(json_encode($accomplishment->toArray()), 201);
         } else {
             return response('', 400);
         }
-
     }
 
     /**
-    * Destroy accomplishment without the need for getting the id
-    */
-    public function destroyByDate( Request $request, Habit $habit)
+     * Destroy accomplishment without the need for getting the id
+     */
+    public function destroyByDate(Request $request, Habit $habit)
     {
-        $date = $request->year . "-". $request->month . "-" . $request->day;
+        //If user can update the habit, then user can destroyByDate
+        $this->authorize('update', $habit);
+
+        $date = $request->year . "-" . $request->month . "-" . $request->day;
         $accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->first();
-        if($accomplishment != null){
-            if($accomplishment->delete()){
+        if ($accomplishment != null) {
+            if ($accomplishment->delete()) {
                 return response('', 204);
             } else {
                 return response('', 400);
@@ -78,14 +85,14 @@ class HabitAccomplishmentsController extends Controller
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  \App\Accomplishment  $accomplishment
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Accomplishment  $accomplishment
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Accomplishment $accomplishment)
     {
-        if($accomplishment->delete()){
+        if ($accomplishment->delete()) {
             return response('', 204);
         } else {
             return response('', 400);

@@ -9,14 +9,21 @@ use App\Http\Resources\Habit as HabitResource;
 
 class HabitController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Habit::class, 'habit');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return HabitResource::collection(Habit::all());
+        $user = $request->user();
+        return HabitResource::collection($user->habits);
     }
 
     /**
@@ -27,7 +34,8 @@ class HabitController extends Controller
      */
     public function store(Request $request)
     {
-        Habit::create($request->toArray());
+        $user = $request->user();
+        $user->habits()->create($request->toArray());
     }
 
     /**
