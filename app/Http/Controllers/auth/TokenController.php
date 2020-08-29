@@ -10,9 +10,9 @@ class TokenController extends Controller
 {
     public function passwordGrant(Request $request)
     {
-        $http = new \GuzzleHttp\Client;
-        $response = $http->post(
+        $req = Request::create(
             '/oauth/token',
+            'POST',
             [
                 'grant_type' => 'password',
                 'client_id' => $request->id,
@@ -23,6 +23,9 @@ class TokenController extends Controller
             ]
         );
 
-        return json_decode((string) $response->getBody(), true);
+        $response = app()->handle($req);
+
+        return
+            response()->json(json_decode($response->getContent()), $response->status());
     }
 }

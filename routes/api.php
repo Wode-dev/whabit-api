@@ -22,11 +22,10 @@ Route::middleware(['cors'])->group(function () {
     });
 
     // Routes for managing user accounts
-    Route::group(['prefix' => 'user'], function () {
-        Route::post('signup', 'auth\UserController@register');
-        Route::delete('delete', 'auth\UserController@destroy');
-        Route::put('update', 'auth\UserController@update');
-    });
+    Route::apiResource('user', 'auth\UserController')->except([
+        'index',
+        'show'
+    ]);
 
     Route::delete('habit/{habit}/accomplishments/date', 'v1\HabitAccomplishmentsController@destroyByDate');
     Route::apiResource('habit', 'v1\HabitController');
