@@ -30,7 +30,11 @@ class HabitPolicy
      */
     public function view(User $user, Habit $habit)
     {
-        return $habit->user->id == $user->id;
+        try {
+            return $habit->user->id == $user->id;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -53,7 +57,11 @@ class HabitPolicy
      */
     public function update(User $user, Habit $habit)
     {
-        return $habit->user->id == $user->id;
+        try {
+            return $habit->user->id == $user->id;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -65,7 +73,11 @@ class HabitPolicy
      */
     public function delete(User $user, Habit $habit)
     {
-        return $habit->user->id == $user->id;
+        try {
+            return $habit->user->id == $user->id;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -89,6 +101,10 @@ class HabitPolicy
      */
     public function forceDelete(User $user, Habit $habit)
     {
-        return $habit->user->id == $user->id;
+        try {
+            return $habit->user->id == $user->id;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 }
