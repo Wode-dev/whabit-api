@@ -49,15 +49,27 @@ class HabitAccomplishmentsController extends Controller
     public function store(Habit $habit, Request $request)
     {
         $date = $request->year . "-" . $request->month . "-" . $request->day;
-        if ($accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->get()->count() > 0) {
+
+        try {
+            // toQuery with no accomplishments results on exception
+            $accomplishment = $habit->accomplishments->toQuery()->whereDate('date', $date)->get()->count() > 0;
+        } catch (\Throwable $th) {
+            // In case there is an error, it means there aren't any accomplishments
+
+            $accomplishment = false;
+        }
+        // In case there are accomplishments there already, return error code
+        if ($accomplishment) {
             return response('', 409);
         }
+
+        // Then, create one
         $accomplishment = $habit->accomplishments()->create([
             "date" => $date
         ]);
 
         if ($accomplishment) {
-            return response()->json(json_encode($accomplishment->toArray()), 201);
+            return response()->json($accomplishment->toArray(), 201);
         } else {
             return response('', 400);
         }
