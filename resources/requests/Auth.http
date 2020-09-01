@@ -1,6 +1,6 @@
 @baseurl = http://api.whabit.wode.lh
 
-###
+### Login
 PUT {{baseurl}}/session/login HTTP/1.1
 Content-Type: application/json
 Accept: application/json
@@ -8,17 +8,17 @@ Accept: application/json
 {
     "id": "3",
     "secret": "oEsDIJcgiHpLuM6jnfOgxxiaPQuXXtW1qfOGL7DP",
-    "email": "teste3@teste.com",
+    "email": "teste4@teste.com",
     "password": "password"
 }
 
-###
+### Registration
 POST {{baseurl}}/user HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
 {
     "name": "teste",
-    "email": "teste3@teste.com",
+    "email": "teste4@teste.com",
     "password": "password"
 }

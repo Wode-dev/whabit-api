@@ -1,17 +1,29 @@
 @baseurl = http://api.whabit.wode.lh
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNjg1ZmI3MTU5ZDhiODNhZTc5MjMzM2E4NmM1YjAzYTVlZDk1MTljNWYxYTQ1MjliNjUxNjg4ZjhmZTY2ODZjOWNkOTBjNzVkMTcwZDFkMjEiLCJpYXQiOjE1OTg5MTk3ODMsIm5iZiI6MTU5ODkxOTc4MywiZXhwIjoxNjMwNDU1NzgzLCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.tLBrzCLXkHrl2DcBUnVgqyFIOxceVmMMp5SvVmIkKDFcjzsROGB4I0h2dM2gfA5Cx1rBC0b24fTbCr8M57_8AcBSvSXghumQnlByRMQtB7qVl1lazME_Mbys5QdQugKkm9kcqH6zawhOjFdMYKbLJfYDk-dZuwH8iGmNFc5BQxr-NaQhnUh40PhP1kVJMoRhWpeK7H2TGHjp7fCI9pW3J-2Sd9vofHrUjjj053-Ow-IvWYwyAPias9UzDfuGv_fpxhYwnMLwb8Z1mI-nI_eZ1YBamPsrpcmshtXEKSHTIl8IAFURhQONCYCYuUZQ_RKNNHDsXGDTx_zTJHdJyS66yUlegHYhFpAWVBE1T_sOHvcPPGLZ4otSM1lfokMixFW19mOCXi0vkxHwtCT57ulb8_teoSg4xiY4ekm2j2BdeyLTdZV8UDyeV_iO8U3RN5qdsYJ62V3O7zP_pKpEbF550G-uPGAPp5ags4xwrpKEdeHOlXFn9iONuEZ7WJeazdRfxgKhxLizmLrIq5DqqloX-TlnDouLE9RciKmwzabHz34_De-1c6sJWGsgkOWXFHAh9JvZhXfpAmaw6EvCcgSYhi4Gltcj6im0sCQvizkADblRLpeItGQRJ4RQMN6EHvQha1aSuQnali1JwseOZhjPhdQOgPn8GneYiRn96QwOL2c
+
 
 GET {{baseurl}}/habit HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
 
 ###
-GET {{baseurl}}/habit/2 HTTP/1.1
+GET {{baseurl}}/habit/4 HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
 
 ###
-GET {{baseurl}}/habit/2/accomplishments?year=2019 HTTP/1.1
+GET {{baseurl}}/habit/2/accomplishments?year=2020 HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
 Content-Type: application/json
 
 ###
 POST {{baseurl}}/habit HTTP/1.1
-content-type: application/json
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
 
 {
     "name": "New Habit"
@@ -19,9 +31,30 @@ content-type: application/json
 
 ###
 GET {{baseurl}}/accomplishment HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
 
 ###
-POST {{baseurl}}/habit/1/accomplishments?year=2020&month=1&day=1
+POST {{baseurl}}/habit/95/accomplishments
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "year": 2020,
+    "month": 1,
+    "day": 3
+}
 
 ###
-DELETE {{baseurl}}/habit/1/accomplishments?year=2020&month=1&day=1
+DELETE {{baseurl}}/habit/1/accomplishments
+Authorization: Bearer {{token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "year": 2020,
+    "month": 1,
+    "day": 1
+}
