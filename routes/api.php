@@ -15,17 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['cors'])->group(function () {
-
-    // Routes for login through API
-    Route::group(['prefix' => 'session'], function () {
-        Route::put('login', 'auth\TokenController@passwordGrant');
-    });
-
     // Routes for managing user accounts
     Route::apiResource('user', 'auth\UserController')->except([
         'index',
         'show'
     ]);
+
+    // Routes for login through API
+    Route::group(['prefix' => 'session'], function () {
+        Route::put('login', 'auth\TokenController@passwordGrant');
+    });
+});
+
+Route::middleware(['cors', 'auth:api'])->group(function () {
 
     Route::delete('habit/{habit}/accomplishments/date', 'v1\HabitAccomplishmentsController@destroyByDate');
     Route::apiResource('habit', 'v1\HabitController');
